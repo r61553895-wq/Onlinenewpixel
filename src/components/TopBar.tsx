@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Volume2, VolumeX, Keyboard, Compass, User, Flame, Activity, Share2, Check } from 'lucide-react';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface TopBarProps {
   x: number;
@@ -128,6 +129,9 @@ export const TopBar: React.FC<TopBarProps> = ({
           </span>
           <span className="text-neutral-500 text-[10px] hidden md:inline">ONLINE</span>
         </div>
+
+        {/* PWA Install Button */}
+        <PWAInstallButton />
 
         {/* Share / Open 2nd tab button */}
         <button
