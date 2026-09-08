@@ -54,8 +54,18 @@ export class MultiplayerClient {
     if (typeof window === 'undefined' || this.isDestroyed) return;
 
     try {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//${window.location.host}/ws`;
+      // Automatic detection: if on GitHub Pages, connect to the live Cloud Run backend
+      const isGithubPages = window.location.hostname.endsWith('github.io');
+      const cloudRunHost = 'ais-pre-rlk6rd6b6e2lxrscouvceq-677660991070.europe-west2.run.app';
+      
+      let wsUrl: string;
+      if (isGithubPages) {
+        wsUrl = `wss://${cloudRunHost}/ws`;
+      } else {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        wsUrl = `${protocol}//${window.location.host}/ws`;
+      }
+
       this.ws = new WebSocket(wsUrl);
 
       this.ws.onopen = () => {
